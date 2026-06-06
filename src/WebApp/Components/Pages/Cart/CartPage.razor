@@ -22,6 +22,7 @@
     else
     {
         <div class='cart-items'>
+            <p class="cart-limit-note">Cantidad máxima: @BasketState.MaxQuantityPerItem unidades por producto.</p>
             <div class='cart-item-header'>
                 <div class='catalog-item-info'>Products</div>
                 <div class='catalog-item-quantity'>Quantity</div>
@@ -42,7 +43,7 @@
                         <form method="post" data-enhance>
                             <input type="hidden" name="_handler" value="update-cart" />
                             <AntiforgeryToken />
-                            <input aria-label="product quantity" type="number" name="UpdateQuantityValue" value="@quantity" min="0" />
+                            <input aria-label="product quantity" type="number" name="UpdateQuantityValue" value="@quantity" min="0" max="@BasketState.MaxQuantityPerItem" />
                             <button type="submit" 
                                     class="button button-secondary"
                                     name="UpdateQuantityId" 

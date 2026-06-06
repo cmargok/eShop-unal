@@ -12,6 +12,16 @@
     flex: 1 0 0;
 }
 
+.cart-items .cart-limit-note {
+    margin: 0;
+    padding: 0.5rem 0.75rem;
+    background: #E0F2FE;
+    border-left: 4px solid #0EA5E9;
+    color: #0C4A6E;
+    font-size: 0.95rem;
+    align-self: stretch;
+}
+
 .cart-items .cart-item-header {
     display: flex;
     padding: 0.5rem 0;

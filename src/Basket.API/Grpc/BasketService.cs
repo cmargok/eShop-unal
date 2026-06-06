@@ -9,6 +9,8 @@ public class BasketService(
     IBasketRepository repository,
     ILogger<BasketService> logger) : Basket.BasketBase
 {
+    public const int MaxQuantityPerItem = 3;
+
     [AllowAnonymous]
     public override async Task<CustomerBasketResponse> GetBasket(GetBasketRequest request, ServerCallContext context)
     {
@@ -46,7 +48,7 @@ public class BasketService(
             logger.LogDebug("Begin UpdateBasket call from method {Method} for basket id {Id}", context.Method, userId);
         }
 
-        var customerBasket = MapToCustomerBasket(userId, request);
+        var customerBasket = MapToCustomerBasket(userId, request, logger);
         var response = await repository.UpdateBasketAsync(customerBasket);
         if (response is null)
         {
@@ -90,7 +92,7 @@ public class BasketService(
         return response;
     }
 
-    private static CustomerBasket MapToCustomerBasket(string userId, UpdateBasketRequest customerBasketRequest)
+    private static CustomerBasket MapToCustomerBasket(string userId, UpdateBasketRequest customerBasketRequest, ILogger logger)
     {
         var response = new CustomerBasket
         {
@@ -99,10 +101,19 @@ public class BasketService(
 
         foreach (var item in customerBasketRequest.Items)
         {
+            var quantity = item.Quantity;
+            if (quantity > MaxQuantityPerItem)
+            {
+                logger.LogWarning(
+                    "Basket {BuyerId}: product {ProductId} requested quantity {Requested} exceeds limit {Max}; capping.",
+                    userId, item.ProductId, quantity, MaxQuantityPerItem);
+                quantity = MaxQuantityPerItem;
+            }
+
             response.Items.Add(new()
             {
                 ProductId = item.ProductId,
-                Quantity = item.Quantity,
+                Quantity = quantity,
             });
         }
 
