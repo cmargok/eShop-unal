@@ -8,7 +8,7 @@
 .catalog-item:hover {
     cursor: pointer;
     padding: 0;
-    border: 2px solid #000;
+    border: 2px solid #0EA5E9;
 }
 
 .catalog-product {
@@ -31,7 +31,7 @@
 }
 
 .catalog-product-content .name {
-    color: #000;
+    color: #0C4A6E;
     font-size: 1rem;
     font-style: normal;
     font-weight: 600;
@@ -40,7 +40,7 @@
 }
 
 .catalog-product-content .price {
-    color: #444;
+    color: #075985;
     text-align: right;
     font-size: 1rem;
     font-style: normal;

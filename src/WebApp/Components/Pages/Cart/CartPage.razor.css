@@ -78,9 +78,9 @@
     justify-content: space-between;
     align-items: center;
     align-self: stretch;
-    border-bottom: 1px solid #000;
+    border-bottom: 1px solid #0EA5E9;
     gap: 0.5rem;
-    color: #000;
+    color: #0C4A6E;
     font-size: 1.25rem;
     font-weight: 600;
     line-height: 120%;
@@ -93,7 +93,7 @@
     align-items: flex-start;
     gap: 0.5rem;
     align-self: stretch;
-    border-bottom: 1px solid #444;
+    border-bottom: 1px solid #38BDF8;
 }
 
 .cart-summary-breakdown-line {
@@ -114,12 +114,12 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    color: #000;
+    color: #0C4A6E;
     text-decoration: none;
 }
 
 .cart-summary .filter-badge {
-    background: #000;
+    background: #0EA5E9;
     color: #FFF;
     font-size: 1rem;
     font-weight: 600;

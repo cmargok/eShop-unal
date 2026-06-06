@@ -3,7 +3,7 @@
 }
 
 .checkout h2 {
-    color: #000;
+    color: #0C4A6E;
     font-size: 1.25rem;
     font-style: normal;
     font-weight: 600;
@@ -19,7 +19,7 @@
     justify-content: space-between;
     align-items: center;
     align-self: stretch;
-    border-top: 1px solid #000;
+    border-top: 1px solid #0EA5E9;
 }
 
 .checkout label {
@@ -27,7 +27,7 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
-    color: #444;
+    color: #075985;
     font-size: 1rem;
     font-style: normal;
     font-weight: 400;
@@ -35,9 +35,9 @@
 }
 
 .checkout ::deep input {
-    border: 1px solid #000;
+    border: 1px solid #38BDF8;
     background: #FFF;
-    color: #000;
+    color: #0C4A6E;
     font-size: 1rem;
     font-style: normal;
     font-weight: 400;

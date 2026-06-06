@@ -11,7 +11,7 @@
 }
 
 .catalog-search .search-badge {
-  background: #000;
+  background: #0EA5E9;
   color: #FFF;
   font-size: 1rem;
   font-weight: 600;
@@ -25,14 +25,14 @@
 }
 
 .catalog-search-group h3 {
-  color: #000;
+  color: #0C4A6E;
   font-size: 1rem;
   font-weight: 600;
   line-height: 150%;
 }
 
 .catalog-search-group .catalog-search-group-tags {
-  border-top: 1px solid #404040;
+  border-top: 1px solid #38BDF8;
   display: flex;
   padding: 0.75rem 0;
   align-items: center;
@@ -50,7 +50,7 @@
   align-items: center;
   gap: 0.25rem;
   border-radius: 1.25rem;
-  color: #404040;
+  color: #075985;
   font-family: 'Open Sans';
   font-size: 1rem;
   font-style: normal;
@@ -65,7 +65,7 @@
 }
 
 .catalog-search-tag.active {
-  background: #000;
+  background: #0EA5E9;
   color: #FFF;
 }
 
