@@ -1,0 +1,240 @@
+html.a11y-text-1 { font-size: 115%; }
+html.a11y-text-2 { font-size: 130%; }
+html.a11y-text-3 { font-size: 150%; }
+
+.a11y-toggle {
+    position: fixed;
+    top: 1.25rem;
+    right: 1.25rem;
+    z-index: 1100;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    border: 2px solid #0EA5E9;
+    background: #FFF;
+    color: #0C4A6E;
+    font-size: 1.75rem;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.a11y-toggle:hover,
+.a11y-toggle:focus {
+    background: #0EA5E9;
+    color: #FFF;
+    outline: 3px solid #0C4A6E;
+    outline-offset: 2px;
+}
+
+.a11y-panel {
+    position: fixed;
+    top: 5.25rem;
+    right: 1.25rem;
+    z-index: 1100;
+    width: 22rem;
+    max-width: calc(100vw - 2.5rem);
+    background: #FFF;
+    border: 2px solid #0EA5E9;
+    border-radius: 0.5rem;
+    padding: 1rem 1.25rem 1.25rem;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    display: none;
+    color: #0C4A6E;
+    font-family: inherit;
+}
+
+.a11y-panel.a11y-panel-open {
+    display: block;
+}
+
+.a11y-panel h2 {
+    margin: 0 0 0.5rem;
+    font-size: 1.25rem;
+    color: #0C4A6E;
+}
+
+.a11y-panel .a11y-section {
+    border-top: 1px solid #38BDF8;
+    padding: 0.85rem 0;
+}
+
+.a11y-panel .a11y-section:first-of-type {
+    border-top: 0;
+    padding-top: 0.25rem;
+}
+
+.a11y-panel .a11y-section-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+    color: #0C4A6E;
+}
+
+.a11y-panel label.a11y-check {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    cursor: pointer;
+    color: #0C4A6E;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.a11y-panel label.a11y-check input[type="checkbox"] {
+    width: 1.15rem;
+    height: 1.15rem;
+    accent-color: #0EA5E9;
+    cursor: pointer;
+}
+
+.a11y-panel .a11y-text-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.a11y-panel .a11y-text-controls button {
+    flex: 1;
+    padding: 0.6rem 0.75rem;
+    background: #0EA5E9;
+    color: #FFF;
+    border: 0;
+    border-radius: 0.3rem;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.a11y-panel .a11y-text-controls button:hover,
+.a11y-panel .a11y-text-controls button:focus {
+    background: #0284C7;
+    outline: 2px solid #0C4A6E;
+    outline-offset: 1px;
+}
+
+.a11y-panel .a11y-text-controls [data-a11y-level] {
+    flex: 0 0 4.5rem;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #0C4A6E;
+}
+
+.a11y-panel .a11y-hint {
+    margin: 0.35rem 0 0;
+    font-size: 0.9rem;
+    color: #075985;
+}
+
+.a11y-icon-label {
+    display: none;
+    margin-left: 0.35rem;
+    font-size: 0.9rem;
+    color: #0C4A6E;
+    font-weight: 600;
+    vertical-align: middle;
+}
+
+html.a11y-show-labels .a11y-icon-label {
+    display: inline;
+}
+
+html.a11y-high-contrast,
+html.a11y-high-contrast body {
+    background: #000 !important;
+    color: #FFFF00 !important;
+}
+
+html.a11y-high-contrast h1,
+html.a11y-high-contrast h2,
+html.a11y-high-contrast h3,
+html.a11y-high-contrast h4,
+html.a11y-high-contrast p,
+html.a11y-high-contrast span,
+html.a11y-high-contrast label,
+html.a11y-high-contrast li,
+html.a11y-high-contrast .a11y-icon-label {
+    color: #FFFF00 !important;
+}
+
+html.a11y-high-contrast a {
+    color: #FFFF00 !important;
+    text-decoration: underline;
+}
+
+html.a11y-high-contrast a:hover,
+html.a11y-high-contrast a:focus {
+    color: #FFF !important;
+}
+
+html.a11y-high-contrast .eshop-footer,
+html.a11y-high-contrast .button.button-primary,
+html.a11y-high-contrast .filter-badge,
+html.a11y-high-contrast .search-badge,
+html.a11y-high-contrast .cart-badge,
+html.a11y-high-contrast .add-to-cart button,
+html.a11y-high-contrast .catalog-filter-tag.active,
+html.a11y-high-contrast .catalog-search-tag.active,
+html.a11y-high-contrast .page-links ::deep a.active-page {
+    background: #FFFF00 !important;
+    color: #000 !important;
+    border-color: #FFFF00 !important;
+}
+
+html.a11y-high-contrast .button.button-secondary,
+html.a11y-high-contrast input,
+html.a11y-high-contrast textarea,
+html.a11y-high-contrast select {
+    background: #000 !important;
+    color: #FFFF00 !important;
+    border: 2px solid #FFFF00 !important;
+}
+
+html.a11y-high-contrast .a11y-panel,
+html.a11y-high-contrast .a11y-toggle {
+    background: #000 !important;
+    color: #FFFF00 !important;
+    border: 2px solid #FFFF00 !important;
+}
+
+html.a11y-high-contrast .a11y-panel h2,
+html.a11y-high-contrast .a11y-panel .a11y-section-label,
+html.a11y-high-contrast .a11y-panel label.a11y-check,
+html.a11y-high-contrast .a11y-panel .a11y-hint,
+html.a11y-high-contrast .a11y-panel [data-a11y-level] {
+    color: #FFFF00 !important;
+}
+
+html.a11y-high-contrast .a11y-panel .a11y-text-controls button {
+    background: #FFFF00 !important;
+    color: #000 !important;
+}
+
+html.a11y-high-contrast .a11y-panel .a11y-section {
+    border-top-color: #FFFF00 !important;
+}
+
+html.a11y-high-contrast :focus {
+    outline: 3px solid #FFFF00 !important;
+    outline-offset: 2px;
+}
+
+@media only screen and (max-width: 480px) {
+    .a11y-toggle {
+        width: 3rem;
+        height: 3rem;
+        font-size: 1.5rem;
+        top: 0.75rem;
+        right: 0.75rem;
+    }
+    .a11y-panel {
+        top: 4.25rem;
+        right: 0.5rem;
+        left: 0.5rem;
+        width: auto;
+    }
+}

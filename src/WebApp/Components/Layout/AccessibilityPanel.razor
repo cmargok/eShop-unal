@@ -1,0 +1,35 @@
+<button type="button" class="a11y-toggle" data-a11y-toggle
+        aria-label="Abrir opciones de accesibilidad" aria-controls="a11y-panel" aria-expanded="false"
+        title="Opciones de accesibilidad">
+    <span aria-hidden="true">&#9855;</span>
+</button>
+
+<div id="a11y-panel" class="a11y-panel" data-a11y-panel role="region" aria-label="Opciones de accesibilidad">
+    <h2>Accesibilidad</h2>
+
+    <div class="a11y-section">
+        <span class="a11y-section-label">Tamaño del texto</span>
+        <div class="a11y-text-controls" role="group" aria-label="Ajustar tamaño del texto">
+            <button type="button" data-a11y-dec aria-label="Reducir tamaño del texto">A-</button>
+            <span data-a11y-level aria-live="polite" aria-atomic="true">A</span>
+            <button type="button" data-a11y-inc aria-label="Aumentar tamaño del texto">A+</button>
+        </div>
+        <p class="a11y-hint">Pulse A+ o A- para ajustar.</p>
+    </div>
+
+    <div class="a11y-section">
+        <label class="a11y-check">
+            <input type="checkbox" data-a11y-hc />
+            Alto contraste
+        </label>
+        <p class="a11y-hint">Texto amarillo sobre fondo negro. Recomendado para baja visión.</p>
+    </div>
+
+    <div class="a11y-section">
+        <label class="a11y-check">
+            <input type="checkbox" data-a11y-labels />
+            Mostrar etiquetas en iconos
+        </label>
+        <p class="a11y-hint">Añade el nombre debajo de los iconos del menú.</p>
+    </div>
+</div>
