@@ -7,8 +7,8 @@ class LoginPage(BasePage):
     
     # Locators
     SIGN_IN_LINK = (By.CSS_SELECTOR, "a[aria-label='Sign in']")
-    USERNAME_INPUT = (By.CSS_SELECTOR, "input[placeholder='Username']")
-    PASSWORD_INPUT = (By.CSS_SELECTOR, "input[placeholder='Password']")
+    USERNAME_INPUT = (By.CSS_SELECTOR, "input[placeholder='Usuario']")
+    PASSWORD_INPUT = (By.CSS_SELECTOR, "input[placeholder='Contraseña']")
     LOGIN_BUTTON = (By.CSS_SELECTOR, "button[value='login']")
     
     # Locators de sesión activa

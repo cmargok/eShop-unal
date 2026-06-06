@@ -53,9 +53,7 @@ class TestFlujoCarrito(unittest.TestCase):
         """Verifica FR-01 y FR-02: Selección de producto, adición al carrito, actualización y remoción."""
         logger.info("-------------------- INICIANDO CASO DE PRUEBA: GESTIÓN DE CARRITO --------------------")
         
-        producto_prueba = "Adventurer GPS Watch"
-        evidencia_fr01_path = None
-        evidencia_fr02_path = None
+        producto_prueba = "Arnés de escalada Razor"
         
         try:
             # 1. Navegación en el catálogo como invitado (sin login previo)

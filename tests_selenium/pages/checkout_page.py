@@ -5,12 +5,12 @@ class CheckoutPage(BasePage):
     """Page Object para la pantalla de Checkout (formulario de envío y pedido)."""
     
     # Locators basados en la estructura <label> Texto <input> </label>
-    STREET_INPUT = (By.XPATH, "//label[contains(normalize-space(.), 'Address')]/input")
-    CITY_INPUT = (By.XPATH, "//label[contains(normalize-space(.), 'City')]/input")
-    STATE_INPUT = (By.XPATH, "//label[contains(normalize-space(.), 'State')]/input")
-    ZIP_CODE_INPUT = (By.XPATH, "//label[contains(normalize-space(.), 'Zip code')]/input")
-    COUNTRY_INPUT = (By.XPATH, "//label[contains(normalize-space(.), 'Country')]/input")
-    PLACE_ORDER_BUTTON = (By.XPATH, "//button[contains(text(), 'Place order')]")
+    STREET_INPUT = (By.XPATH, "//label[contains(normalize-space(.), 'Dirección')]/input")
+    CITY_INPUT = (By.XPATH, "//label[contains(normalize-space(.), 'Ciudad')]/input")
+    STATE_INPUT = (By.XPATH, "//label[contains(normalize-space(.), 'Estado')]/input")
+    ZIP_CODE_INPUT = (By.XPATH, "//label[contains(normalize-space(.), 'Código postal')]/input")
+    COUNTRY_INPUT = (By.XPATH, "//label[contains(normalize-space(.), 'Pais')]/input")
+    PLACE_ORDER_BUTTON = (By.XPATH, "//button[contains(text(), 'Realizar pedido')]")
 
     def wait_for_checkout_loaded(self):
         """Espera a que cargue la sección del Checkout."""
