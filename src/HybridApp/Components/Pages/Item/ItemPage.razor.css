@@ -30,7 +30,7 @@ img {
 }
 
 .add-to-cart button {
-    background-color: black;
+    background-color: #0EA5E9;
     color: white;
     border-radius: .25rem;
     border: 0;
@@ -42,13 +42,13 @@ img {
 }
 
 .add-to-cart button:hover {
-    background-color: #666;
+    background-color: #0284C7;
 }
 
     .add-to-cart button:active {
-        background-color: #333;
+        background-color: #0369A1;
     }
 
 a {
-    color: black;
+    color: #0C4A6E;
 }

@@ -254,14 +254,14 @@ body {
 }
 
 .button.button-primary {
-    background: #000;
+    background: #0EA5E9;
     color: #FFF;
 }
 
 .button.button.button-secondary {
-    border: 1px solid #444;
+    border: 1px solid #075985;
     background: #FFF;
-    color: #000;
+    color: #0C4A6E;
 }
 
 h1:focus {
