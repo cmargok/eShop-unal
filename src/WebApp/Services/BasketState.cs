@@ -12,6 +12,8 @@ public class BasketState(
     OrderingService orderingService,
     AuthenticationStateProvider authenticationStateProvider) : IBasketState
 {
+    public const int MaxQuantityPerItem = 3;
+
     private Task<IReadOnlyCollection<BasketItem>>? _cachedBasket;
     private HashSet<BasketStateChangedSubscription> _changeSubscriptions = new();
 
@@ -39,7 +41,7 @@ public class BasketState(
             var existing = items[i];
             if (existing.ProductId == item.Id)
             {
-                items[i] = existing with { Quantity = existing.Quantity + 1 };
+                items[i] = existing with { Quantity = Math.Min(existing.Quantity + 1, MaxQuantityPerItem) };
                 found = true;
                 break;
             }
@@ -62,7 +64,7 @@ public class BasketState(
         {
             if (quantity > 0)
             {
-                row.Quantity = quantity;
+                row.Quantity = Math.Min(quantity, MaxQuantityPerItem);
             }
             else
             {
