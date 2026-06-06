@@ -1,9 +1,12 @@
-﻿using System.Net.Http.Json;
+﻿using System.IO;
+using System.Net;
+using System.Net.Http.Json;
 using System.Text.Json;
 using Asp.Versioning;
 using Asp.Versioning.Http;
 using eShop.Catalog.API.Model;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace eShop.Catalog.FunctionalTests;
 
@@ -22,7 +25,6 @@ public sealed class CatalogApiTests : IClassFixture<CatalogApiFixture>
         var handler = new ApiVersionHandler(new QueryStringApiVersionWriter(), apiVersion);
         return _webApplicationFactory.CreateDefaultClient(handler);
     }
-
     [Theory]
     [InlineData(1.0)]
     [InlineData(2.0)]
@@ -227,6 +229,72 @@ public sealed class CatalogApiTests : IClassFixture<CatalogApiFixture>
 
         // Assert
         Assert.Equal("image/webp", result);
+    }
+
+    [Theory]
+    [InlineData(1.0)]
+    [InlineData(2.0)]
+    public async Task CreateCatalogItemWithInvalidPictureFileName_ReturnsBadRequest(double version)
+    {
+        var _httpClient = CreateHttpClient(new ApiVersion(version));
+
+        var newItem = new CatalogItem("Unsafe Product")
+        {
+            CatalogBrandId = 1,
+            CatalogTypeId = 1,
+            Price = 10m,
+            AvailableStock = 5,
+            RestockThreshold = 1,
+            MaxStockThreshold = 10,
+            PictureFileName = "../appsettings.json"
+        };
+
+        // Act
+        var response = await _httpClient.PostAsJsonAsync("/api/catalog/items", newItem, TestContext.Current.CancellationToken);
+
+        // Assert
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+    }
+    
+    [Theory]
+    [InlineData(1.0)]
+    [InlineData(2.0)]
+    public async Task GetItemPictureById_WithSafePictureFileName_ReturnsImage(double version)
+    {
+        var _httpClient = CreateHttpClient(new ApiVersion(version));
+
+        using var scope = _webApplicationFactory.Services.CreateScope();
+        var environment = scope.ServiceProvider.GetRequiredService<IWebHostEnvironment>();
+        var context = scope.ServiceProvider.GetRequiredService<eShop.Catalog.API.Infrastructure.CatalogContext>();
+
+        var picsDirectory = Path.Combine(environment.ContentRootPath, "Pics");
+        Directory.CreateDirectory(picsDirectory);
+
+        var safeFileName = "safe-image.png";
+        var imagePath = Path.Combine(picsDirectory, safeFileName);
+        await File.WriteAllTextAsync(imagePath, "fake png content", TestContext.Current.CancellationToken);
+
+        var safeItem = new CatalogItem("Safe Product")
+        {
+            Id = 9997,
+            CatalogBrandId = 1,
+            CatalogTypeId = 1,
+            Price = 1m,
+            AvailableStock = 1,
+            RestockThreshold = 1,
+            MaxStockThreshold = 5,
+            PictureFileName = safeFileName
+        };
+
+        context.CatalogItems.Add(safeItem);
+        await context.SaveChangesAsync(TestContext.Current.CancellationToken);
+
+        // Act
+        var response = await _httpClient.GetAsync($"/api/catalog/items/{safeItem.Id}/pic", TestContext.Current.CancellationToken);
+
+        // Assert
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        Assert.Equal("image/png", response.Content.Headers.ContentType.MediaType);
     }
 
     [Theory]

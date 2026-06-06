@@ -1,5 +1,6 @@
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -214,9 +215,19 @@ public static class CatalogApi
             return TypedResults.NotFound();
         }
 
-        var path = GetFullPath(environment.ContentRootPath, item.PictureFileName);
+        if (!TryGetValidatedPictureFileName(item.PictureFileName, out var safePictureFileName, out _))
+        {
+            return TypedResults.NotFound();
+        }
 
-        string imageFileExtension = Path.GetExtension(item.PictureFileName) ?? string.Empty;
+        var path = GetFullPath(environment.ContentRootPath, safePictureFileName!);
+
+        if (!File.Exists(path))
+        {
+            return TypedResults.NotFound();
+        }
+
+        string imageFileExtension = Path.GetExtension(safePictureFileName) ?? string.Empty;
         string mimetype = GetImageMimeTypeFromImageFileExtension(imageFileExtension);
         DateTime lastModified = File.GetLastWriteTimeUtc(path);
 
@@ -336,6 +347,13 @@ public static class CatalogApi
             });
         }
 
+        if (!TryGetValidatedPictureFileName(productToUpdate.PictureFileName, out var safePictureFileName, out var validationProblem))
+        {
+            return TypedResults.BadRequest(validationProblem!);
+        }
+
+        productToUpdate.PictureFileName = safePictureFileName;
+
         // Update current product
         var catalogEntry = services.Context.Entry(catalogItem);
         catalogEntry.CurrentValues.SetValues(productToUpdate);
@@ -363,17 +381,22 @@ public static class CatalogApi
     }
 
     [ProducesResponseType<ProblemDetails>(StatusCodes.Status400BadRequest, "application/problem+json")]
-    public static async Task<Created> CreateItem(
+    public static async Task<Results<Created, BadRequest<ProblemDetails>>> CreateItem(
         [AsParameters] CatalogServices services,
         CatalogItem product)
     {
+        if (!TryGetValidatedPictureFileName(product.PictureFileName, out var safePictureFileName, out var validationProblem))
+        {
+            return TypedResults.BadRequest(validationProblem!);
+        }
+
         var item = new CatalogItem(product.Name)
         {
             Id = product.Id,
             CatalogBrandId = product.CatalogBrandId,
             CatalogTypeId = product.CatalogTypeId,
             Description = product.Description,
-            PictureFileName = product.PictureFileName,
+            PictureFileName = safePictureFileName,
             Price = product.Price,
             AvailableStock = product.AvailableStock,
             RestockThreshold = product.RestockThreshold,
@@ -417,6 +440,85 @@ public static class CatalogApi
         _ => "application/octet-stream",
     };
 
-    public static string GetFullPath(string contentRootPath, string pictureFileName) =>
-        Path.Combine(contentRootPath, "Pics", pictureFileName);
+    private static readonly string[] AllowedPictureFileExtensions = new[]
+    {
+        ".png",
+        ".gif",
+        ".jpg",
+        ".jpeg",
+        ".bmp",
+        ".tiff",
+        ".wmf",
+        ".jp2",
+        ".svg",
+        ".webp"
+    };
+
+    private static readonly Regex AllowedPictureFileNameRegex = new(
+        @"^[A-Za-z0-9_-]+\.(png|gif|jpg|jpeg|bmp|tiff|wmf|jp2|svg|webp)$",
+        RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
+
+    private static bool TryGetValidatedPictureFileName(
+        string? pictureFileName,
+        out string? sanitizedFileName,
+        out ProblemDetails? problem)
+    {
+        sanitizedFileName = null;
+        problem = null;
+
+        if (string.IsNullOrWhiteSpace(pictureFileName))
+        {
+            return true;
+        }
+
+        var canonicalFileName = Uri.UnescapeDataString(pictureFileName);
+
+        if (Path.IsPathRooted(canonicalFileName) || canonicalFileName.Contains('/') || canonicalFileName.Contains('\\'))
+        {
+            problem = new ProblemDetails { Detail = "Invalid picture file name." };
+            return false;
+        }
+
+        var fileName = Path.GetFileName(canonicalFileName);
+        if (!string.Equals(fileName, canonicalFileName, StringComparison.Ordinal))
+        {
+            problem = new ProblemDetails { Detail = "Invalid picture file name." };
+            return false;
+        }
+
+        if (fileName.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
+        {
+            problem = new ProblemDetails { Detail = "Invalid picture file name." };
+            return false;
+        }
+
+        if (!AllowedPictureFileNameRegex.IsMatch(fileName))
+        {
+            problem = new ProblemDetails { Detail = "Invalid picture file name." };
+            return false;
+        }
+
+        sanitizedFileName = fileName;
+        return true;
+    }
+
+    public static string GetFullPath(string contentRootPath, string pictureFileName)
+    {
+        var imagesRoot = Path.GetFullPath(Path.Combine(contentRootPath, "Pics"));
+        var fullPath = Path.GetFullPath(Path.Combine(imagesRoot, pictureFileName));
+
+        if (!fullPath.StartsWith(imagesRoot + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase) &&
+            !string.Equals(fullPath, imagesRoot, StringComparison.OrdinalIgnoreCase))
+        {
+            throw new InvalidOperationException("Invalid picture path.");
+        }
+
+        var relativePath = Path.GetRelativePath(imagesRoot, fullPath);
+        if (relativePath.StartsWith("..", StringComparison.Ordinal) || Path.IsPathRooted(relativePath))
+        {
+            throw new InvalidOperationException("Invalid picture path.");
+        }
+
+        return fullPath;
+    }
 }
