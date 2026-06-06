@@ -7,9 +7,9 @@ class CartPage(BasePage):
     # Locators
     CART_HEADER = (By.XPATH, "//h1[contains(text(), 'Shopping bag')] | //*[contains(@class, 'page-header-title') and contains(text(), 'Shopping bag')]")
     QUANTITY_INPUT = (By.CSS_SELECTOR, "input[aria-label='product quantity']")
-    UPDATE_BUTTON = (By.XPATH, "//button[contains(text(), 'Update')]")
+    UPDATE_BUTTON = (By.XPATH, "//button[@name='UpdateQuantityId']")
     CHECKOUT_BUTTON = (By.CSS_SELECTOR, "a[href='checkout']")
-    EMPTY_CART_MESSAGE = (By.XPATH, "//*[contains(text(), 'Your shopping bag is empty')]")
+    EMPTY_CART_MESSAGE = (By.XPATH, "//*[contains(text(), 'Tu carrito de compras está vacío')]")
     
     def wait_for_cart_loaded(self):
         """Espera a que la página del carrito esté completamente cargada."""
