@@ -38,7 +38,7 @@ class CatalogPage(BasePage):
         
         # ESPERA ASÍNCRONA: Esperar a que el texto "in shopping bag" aparezca para confirmar persistencia.
         # Usamos "." en lugar de "text()" para acumular el texto de nodos hijos mezclados (strong, texto y a).
-        confirmacion_locator = (By.XPATH, "//*[contains(., 'in shopping bag')]")
+        confirmacion_locator = (By.XPATH, "//*[contains(., 'en Carrito de compras')]")
         self.find_element(confirmacion_locator)
         logger.info("Producto añadido y confirmado exitosamente en el DOM.")
 

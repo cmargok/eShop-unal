@@ -56,7 +56,7 @@ class TestFlujoCompra(unittest.TestCase):
         """Verifica FR-03 y FR-04: Login de usuario, selección, checkout de orden y validación en historial."""
         logger.info("-------------------- INICIANDO CASO DE PRUEBA: COMPRA COMPLETA (E2E) --------------------")
         
-        producto_prueba = "Adventurer GPS Watch"
+        producto_prueba = "Arnés de escalada Razor"
         datos_envio = BasketCheckoutInfo(
             street="Diagonal 45 # 23-44 Apt 302",
             city="Bogota D.C.",
